@@ -99,18 +99,30 @@ $(document).ready(function(){
         $('#question_sentence').val(question.question);
         $('#response_sentence').val('-');
         $('button#answer').show();
+        synthText(config.question_sentence_lang, question.question);
     });
 
     $('button#answer').click(function(event){
         event.preventDefault();
         $('#response_sentence').val(question.answer);
         $('button#answer').hide();
+        synthText(config.response_sentence_lang, question.answer);
     })
 
 });
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function synthText(lang, message){
+    if(speechSynthesis.speaking){
+        speechSynthesis.cancel();
+    }
+    var msg = new SpeechSynthesisUtterance();
+    msg.text = message;
+    msg.lang = lang;
+    speechSynthesis.speak(msg);
 }
 
 
