@@ -38,9 +38,17 @@
                     <input type="text" class="form-control" id="response_sentence" readonly />
                     <small id="emailHelp" class="form-text text-muted">Response of the question</small>
                 </div>
-                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                <button id="next" class="btn btn-primary">Next</button>
-                <button id="answer" class="btn btn-primary">Answer</button>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="autoplay">
+                        <label class="form-check-label" for="autoplay"> Autoplay </label>
+                    </div>
+                </div>
+                <div class="form-group" id="controls-panel">
+                    <button id="next" class="btn btn-primary">Next</button>
+                    <button id="answer" class="btn btn-primary">Answer</button>
+                </div>
+
             </form>
         </main>
         <!-- SCRIPTS -->

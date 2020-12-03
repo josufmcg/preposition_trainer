@@ -1,128 +1,245 @@
-(function(global){
-			
-    // La función que devolverá el objeto
+(function(global, $){
+
+    /** 
+     * Models
+    */
     var Config = function (data){
-        this.question_sentence_lang = data['question_sentence_lang'];
-        this.response_sentence_lang = data['response_sentence_lang'];
+        this.dataFolder = data['data_folder'];
     };
 
-    var ConfigRepository = {};
-    ConfigRepository.getConfig = function(){
-        var opts = {
-        method: 'GET',      
-        headers: {}
-        };
-        return fetch('/config/config.json', opts).then(function (response) {
-            return response.json();
-        });
-    }
-    
     var Group = function (data){
         this.id = data['id'];
         this.name = data['name'];
-        this.order = data['order'];
+        this.questionLang = data['question_lang'];
+        this.responseLang = data['response_lang'];
     };
 
-    var GroupRepository = {};
-    GroupRepository.getGroups = function(){
-        var opts = {
-        method: 'GET',      
-        headers: {}
-        };
-        return fetch('/config/groups.json', opts).then(function (response) {
-            return response.json();
-        });
-    }
-
     var Question = function (data){
-        this.category_id = data['category_id'];
+        this.group_id = data['group_id'];
         this.question = data['question'];
         this.answer = data['answer'];
     };
 
-    var QuestionRepository = {};
-    QuestionRepository.getQuestions = function(){
-        var opts = {
-        method: 'GET',      
-        headers: {}
-        };
-        return fetch('/config/questions.json', opts).then(function (response) {
+
+    /** 
+     * Repositories
+    */
+    var ConfigRepository = {
+        getConfig : async function(){
+            var opts = {
+                method: 'GET',
+                headers: {}
+            };
+            const response = await fetch('/config/config.json', opts);
             return response.json();
-        });
+        }
+    };
+    
+    var GroupRepository = {
+        dataFolder: 'data',
+
+        init: function(config){
+            self.dataFolder = config.dataFolder
+        },
+
+        getGroups : async function(){
+            var opts = {
+                method: 'GET',
+                headers: {}
+            };
+            const response = await fetch(self.dataFolder + '/groups.json', opts);
+            return response.json();
+        }
+    };
+    
+
+    var QuestionRepository = {
+        dataFolder: 'data',
+
+        init: function(config){
+            self.dataFolder = config.dataFolder
+        },
+        
+        getQuestions : async function(){
+            var opts = {
+                method: 'GET',
+                headers: {}
+            };
+            const response = await fetch(self.dataFolder + '/questions.json', opts);
+            return response.json();
+        }
+    };
+
+
+    /** 
+     * Utils
+    */
+    var Utils = {
+        getRandomInt: function (min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        },
+
+        synthText: function (lang, message){
+            if(speechSynthesis.speaking){
+                speechSynthesis.cancel();
+            }
+            var msg = new SpeechSynthesisUtterance();
+            msg.text = message;
+            msg.lang = lang;
+            speechSynthesis.speak(msg);
+        }
     }
 
-    
-    // Generamos los alias hacia la función
-    global.PT = {};
-    global.PT.Config = Config;
-    global.PT.Group = Group;
-    global.PT.Question = Question;
 
-    global.PT.ConfigRepository = ConfigRepository;
-    global.PT.GroupRepository = GroupRepository;
-    global.PT.QuestionRepository = QuestionRepository;
-    
-}(window));
+    /** 
+     * ViewModel
+    */
+    var ViewModel = {
+        config : {},
+        groups : [],
+        questions : [],
+        currentGroup: {},
+        currentQuestions : [],
+        currentQuestion : {},
+        autoPlay: false,
+
+        init: async function(){
+            var self = this;
+
+            await self.loadDataCache();
+            self.setDefaultParams();
+            self.loadViews();
+            self.loadViewEvents();
+        },
 
 
-$(document).ready(function(){
-    
-    var config = {};
-    PT.ConfigRepository.getConfig().then(function(configData){
-        config = new PT.Config(configData);
-        console.log(config);
-    });
+        loadDataCache: async function(){
+            var self = this;
 
-    var groups = [];
-    PT.GroupRepository.getGroups().then(function(groupsData){
-        for (let i=0; i<groupsData.length; i++){
-            group = new PT.Group(groupsData[i]);
-            groups.push(group)
+           await ConfigRepository.getConfig().then(function(configData){
+                self.config = new Config(configData);
+            });
+
+            GroupRepository.init(self.config);
+            await GroupRepository.getGroups().then(function(groupsData){
+                for (let i=0; i<groupsData.length; i++){
+                    let group = new Group(groupsData[i]);
+                    self.groups.push(group)
+                }
+            });
+            
+            QuestionRepository.init(self.config);
+            await QuestionRepository.getQuestions().then(function(questionsData){
+                for (let i=0; i<questionsData.length; i++){
+                    let question = new Question(questionsData[i]);
+                    self.questions.push(question)
+                }
+            });
+        },
+
+        setDefaultParams: function(){
+            var self = this;
+            self.currentGroup = self.groups[0];
+            self.updateGroupQuestions();
+        },
+
+        updateGroupQuestions: function(){
+            var self = this;
+            self.currentQuestions = self.questions.filter((question) =>{
+                return question.group_id == self.currentGroup.id;
+            })
+        },
+
+        loadViews: function(){
+            var self = this;
+            $('select#category').empty();
+            for(let i=0; i< self.groups.length; i++){
+                let group = self.groups[i];
+                sel = group.id == self.currentGroup.id ? 'selected' : '';
+                $('select#category').append('<option value="' + group.id + '" ' + sel + '>' + group.name + '</option>');
+            } 
+        },
+
+
+        loadViewEvents: function(){
+            var self = this;
+
+            $('select#category').on('change', function() {
+                var value = this.value;
+                let groups = self.groups.filter((group) =>{
+                    return group.id == value;
+                });
+                if (!groups) return;
+
+                self.currentGroup = groups[0];
+                self.updateGroupQuestions()
+            });
+            
+            $('button#next').click(function(event){
+                event.preventDefault();
+                self.showRandomQuestion();
+            });
+
+            $('button#answer').click(function(event){
+                event.preventDefault();
+                self.showQuestionResponse();
+               
+            })
+
+            $('input#autoplay').on('change', function(){
+                self.autoPlay = this.checked;
+                if (self.autoPlay) {
+                    self.startAutoplay();
+                    $('div#controls-panel').hide();
+                } else {
+                    $('div#controls-panel').show();
+                }
+            });
+        },
+
+        showRandomQuestion: function(){
+            var self = this;
+
+            let questionIndex = Utils.getRandomInt(0, self.currentQuestions.length);
+            self.currentQuestion = self.currentQuestions[questionIndex];
+            $('#question_sentence').val(self.currentQuestion.question);
+            $('#response_sentence').val('-');
+            $('button#answer').show();
+            Utils.synthText(self.currentGroup.questionLang, self.currentQuestion.question);
+        },
+
+        showQuestionResponse: function(){
+            var self = this;
+
+            $('#response_sentence').val(self.currentQuestion.answer);
+            $('button#answer').hide();
+            Utils.synthText(self.currentGroup.responseLang, self.currentQuestion.answer);
+        },
+
+        startAutoplay: async function(){
+            var self = this;
+
+            while(self.autoPlay) {
+                await new Promise(r => setTimeout(r, 3000));
+                let groupIndex = Utils.getRandomInt(0, self.groups.length);
+                self.currentGroup = self.groups[groupIndex];
+                self.updateGroupQuestions();
+                self.showRandomQuestion();
+                await new Promise(r => setTimeout(r, 5000));
+                self.showQuestionResponse();
+            }
+        },
+
+        later: function (delay) {
+            return new Promise(function(resolve) {
+                setTimeout(resolve, delay);
+            });
         }
-        console.log(groups);
-    });
-
-    var questions = [];
-    PT.QuestionRepository.getQuestions().then(function(questionsData){
-        for (let i=0; i<questionsData.length; i++){
-            question = new PT.Question(questionsData[i]);
-            questions.push(question)
-        }
-        console.log(questions);
-    });
-
-    let question = {};
-    $('button#next').click(function(event){
-        event.preventDefault();
-        let questionIndex = getRandomInt(0, questions.length);
-        question = questions[questionIndex];
-        $('#question_sentence').val(question.question);
-        $('#response_sentence').val('-');
-        $('button#answer').show();
-        synthText(config.question_sentence_lang, question.question);
-    });
-
-    $('button#answer').click(function(event){
-        event.preventDefault();
-        $('#response_sentence').val(question.answer);
-        $('button#answer').hide();
-        synthText(config.response_sentence_lang, question.answer);
-    })
-
-});
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
-
-function synthText(lang, message){
-    if(speechSynthesis.speaking){
-        speechSynthesis.cancel();
     }
-    var msg = new SpeechSynthesisUtterance();
-    msg.text = message;
-    msg.lang = lang;
-    speechSynthesis.speak(msg);
-}
+
+
+    ViewModel.init();
+    
+}(window, jQuery));
 
 

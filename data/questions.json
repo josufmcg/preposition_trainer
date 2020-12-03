@@ -1,0 +1,67 @@
+[
+    {
+        "group_id": "TIME",
+        "question": "Iré al parque el Lunes",
+        "answer": "I will go to the park on Monday" 
+    },
+    {
+        "group_id": "TIME",
+        "question": "Mi cumpleaños es en Febrero",
+        "answer": "My birthday is in February" 
+    },
+    {
+        "group_id": "TIME",
+        "question": "Me reuniré con él a la noche",
+        "answer": "I will meet him at night" 
+    },
+    {
+        "group_id": "TIME",
+        "question": "Esa ley no se ha modificado desde 1980",
+        "answer": "That law hasn't been modified since 1980" 
+    },
+    {
+        "group_id": "TIME",
+        "question": "He estado trabajando allí durante 2 años",
+        "answer": "I have been working there for 2 years" 
+    },
+    {
+        "group_id": "TIME",
+        "question": "Trabajamos de Lunes a Viernes",
+        "answer": "We work from Monday to Friday" 
+    },
+    {
+        "group_id": "TIME",
+        "question": "Él está de vacaciones hasta el Viernes",
+        "answer": "He is on holiday until Friday" 
+    },
+    {
+        "group_id": "TIME",
+        "question": "Estará de vuelta para las seis",
+        "answer": "He will be back by six o'clock" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Invitar a alguien a cenar",
+        "answer": "Invite somebody to dinner" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Tengo prisa",
+        "answer": "I'm hurry" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Él puso una canción",
+        "answer": "He played a song" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Tú le esperaste",
+        "answer": "You waited for him" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Mira ese coche",
+        "answer": "Look at that car" 
+    }
+]

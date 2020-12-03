@@ -1,0 +1,12 @@
+[{
+    "id": "VERBS",
+    "name": "Verbs prepositions",
+    "question_lang": "es",
+    "response_lang": "en"
+},
+{
+    "id": "TIME",
+    "name": "Time prepositions",
+    "question_lang": "es",
+    "response_lang": "en"
+}]

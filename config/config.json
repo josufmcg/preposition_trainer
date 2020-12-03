@@ -1,4 +1,3 @@
 {
-    "question_sentence_lang": "es",
-    "response_sentence_lang": "en"
+    "data_folder": "data"
 }
