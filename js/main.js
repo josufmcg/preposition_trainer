@@ -30,7 +30,7 @@
                 method: 'GET',
                 headers: {}
             };
-            const response = await fetch('/config/config.json', opts);
+            const response = await fetch('./config/config.json', opts);
             return response.json();
         }
     };
