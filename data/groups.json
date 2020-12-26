@@ -15,10 +15,4 @@
     "name": "Place prepositions",
     "question_lang": "es",
     "response_lang": "en"
-},
-{
-    "id": "RANDOM",
-    "name": "Random prepositions",
-    "question_lang": "es",
-    "response_lang": "en"
 }]
