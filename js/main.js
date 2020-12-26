@@ -3,29 +3,63 @@
     /** 
      * Models
     */
-    var Config = function (data){
-        this.dataFolder = data['data_folder'];
-    };
+    class Config {
+        constructor(data) {
+            this.dataFolder = data['data_folder'];
+        }
+    }
 
-    var Group = function (data){
-        this.id = data['id'];
-        this.name = data['name'];
-        this.questionLang = data['question_lang'];
-        this.responseLang = data['response_lang'];
-    };
+    class Group {
+        constructor(data) {
+            this.id = data['id'];
+            this.name = data['name'];
+            this.questionLang = data['question_lang'];
+            this.responseLang = data['response_lang'];
+        }
+    }
 
-    var Question = function (data){
-        this.group_id = data['group_id'];
-        this.question = data['question'];
-        this.answer = data['answer'];
-    };
+    class Question {
+        constructor(data) {
+            this.group_id = data['group_id'];
+            this.question = data['question'];
+            this.answer = data['answer'];
+            this.randomize = {};
+            if ('randomize' in data) {
+                this.randomize = data['randomize'];
+            }
+        }
+        getQuestion() {
+            var self = this;
+            if(!self.randomize) {
+                return self.question;
+            }
+            let question = self.question;
+            Object.keys(self.randomize).forEach((key) =>{
+                let index = self.randomize[key]['index'];
+                question = question.replace(`##${key}##`, self.randomize[key]['question'][index])
+            });
+            return question;
+        }
+        getAnswer() {
+            var self = this;
+            if(!self.randomize){
+                return self.answer;
+            } 
+            let answer = self.answer;
+            Object.keys(self.randomize).forEach((key) =>{
+                let index = self.randomize[key]['index'];
+                answer = answer.replace(`##${key}##`, self.randomize[key]['answer'][index])
+            });
+            return answer;
+        }
+    }
 
 
     /** 
      * Repositories
     */
     var ConfigRepository = {
-        getConfig : async function(){
+        getConfig: async function(){
             var opts = {
                 method: 'GET',
                 headers: {}
@@ -42,7 +76,7 @@
             self.dataFolder = config.dataFolder
         },
 
-        getGroups : async function(){
+        getGroups: async function(){
             var opts = {
                 method: 'GET',
                 headers: {}
@@ -60,7 +94,7 @@
             self.dataFolder = config.dataFolder
         },
         
-        getQuestions : async function(){
+        getQuestions: async function(){
             var opts = {
                 method: 'GET',
                 headers: {}
@@ -202,18 +236,26 @@
 
             let questionIndex = Utils.getRandomInt(0, self.currentQuestions.length);
             self.currentQuestion = self.currentQuestions[questionIndex];
-            $('#question_sentence').val(self.currentQuestion.question);
+            if(self.currentQuestion.randomize){
+                let keys = Object.keys(self.currentQuestion.randomize);
+                keys.forEach(key => {
+                    let len = self.currentQuestion.randomize[key]['question'].length;
+                    let index = Utils.getRandomInt(0, len);
+                    self.currentQuestion.randomize[key]['index'] = index
+                });
+            }
+            $('#question_sentence').val(self.currentQuestion.getQuestion());
             $('#response_sentence').val('-');
             $('button#answer').show();
-            Utils.synthText(self.currentGroup.questionLang, self.currentQuestion.question);
+            Utils.synthText(self.currentGroup.questionLang, self.currentQuestion.getQuestion());
         },
 
         showQuestionResponse: function(){
             var self = this;
 
-            $('#response_sentence').val(self.currentQuestion.answer);
+            $('#response_sentence').val(self.currentQuestion.getAnswer());
             $('button#answer').hide();
-            Utils.synthText(self.currentGroup.responseLang, self.currentQuestion.answer);
+            Utils.synthText(self.currentGroup.responseLang, self.currentQuestion.getAnswer());
         },
 
         startAutoplay: async function(){

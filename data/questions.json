@@ -40,6 +40,41 @@
         "answer": "He will be back by six o'clock" 
     },
     {
+        "group_id": "TIME",
+        "question": "¿A qué hora te viene bien?",
+        "answer": "What time is fine for you?" 
+    },
+    {
+        "group_id": "TIME",
+        "question": "Normalmente llegas a la hora recomendada",
+        "answer": "You usually arrive at recommended time" 
+    },
+    {
+        "group_id": "TIME",
+        "question": "Él sale de casa en el último minuto",
+        "answer": "He leaves home at the last minute" 
+    },
+    {
+        "group_id": "TIME",
+        "question": "¿Vendrás en Navidades?",
+        "answer": "Will you come at Christmas?" 
+    },
+    {
+        "group_id": "TIME",
+        "question": "##SUBJECT## abrir la tienda en ##TIME##",
+        "answer": "##SUBJECT## going to open the store in ##TIME##",
+        "randomize": {
+            "SUBJECT": {
+                "question": ["Van a", "Voy a"],
+                "answer": ["They are", "I am"]
+            },
+            "TIME": {
+                "question": ["verano", "invierno"],
+                "answer": ["summer", "winter"]
+            }
+        }
+    },
+    {
         "group_id": "VERBS",
         "question": "Invitar a alguien a cenar",
         "answer": "Invite somebody to dinner" 
@@ -63,5 +98,243 @@
         "group_id": "VERBS",
         "question": "Mira ese coche",
         "answer": "Look at that car" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Invitar a alguien a cenar",
+        "answer": "Invite somebody to dinner" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Conducir a lo largo de la calle principal",
+        "answer": "Drive along the mail street" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Pasar un buen rato",
+        "answer": "Have a great time" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Odio esperar por gente que llega tarde",
+        "answer": "I hate waiting for people who are late" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Nos reuniremos en un café bar",
+        "answer": "We will meet in a cofee bar" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Ellos esperaron a sus amigos",
+        "answer": "They waited for their friends" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Nosotros salimos del club muy tarde",
+        "answer": "We left the club very late" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Lo siento, pero no estoy deacuerdo contigo",
+        "answer": "I'm sorry, but I don't agree with you" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Pedí un sandwich de pollo, pero esto es atún",
+        "answer": "I asked for a chicken sandwich, but this is tuna" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Necesito hablar (talk) con Martín acerca de la reunión",
+        "answer": "I have to talk to Martín about the meeting" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "Yo no gasto mucho dinero en comida",
+        "answer": "I don't spend much money on food" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "No te preocupes por el test. No era difícil.",
+        "answer": "Don't worry about the test. It wasn't difficult." 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "¿Crees en fantasmas?",
+        "answer": "Do you believe en ghosts?" 
+    },
+    {
+        "group_id": "VERBS",
+        "question": "¿A quién pertenece esta bolsa?",
+        "answer": "Who does this bag belong to?" 
+    },
+    {
+        "group_id": "PLACE",
+        "question": "Mis padres se estaban sentando en el sofá",
+        "answer": "My parents were sitting on the sofa" 
+    },
+    {
+        "group_id": "PLACE",
+        "question": "Mis padres se estaban sentando en el sofá",
+        "answer": "My parents were sitting on the sofa" 
+    },
+    {
+        "group_id": "PLACE",
+        "question": "Llegué a Paris la noche del Viernes",
+        "answer": "I arrived in Paris on Friday night" 
+    },
+    {
+        "group_id": "PLACE",
+        "question": "Estaba muy cansado cuando llegué al hotel",
+        "answer": "I was very tired when I arrived at hotel" 
+    },
+    {
+        "group_id": "PLACE",
+        "question": "Yo voy a pie",
+        "answer": "I go on foot" 
+    },
+    {
+        "group_id": "PLACE",
+        "question": "Ella va a trabajar en bicicleta",
+        "answer": "She goes to work by bike" 
+    },
+    {
+        "group_id": "PLACE",
+        "question": "Tú estás cerca de ella",
+        "answer": "You are close to her" 
+    },
+    {
+        "group_id": "PLACE",
+        "question": "Me reuniré con él en ##PLACE##",
+        "answer": "I'll meet him at ##PLACE##" ,
+        "randomize": {
+            "PLACE": {
+                "question": ["la escuela", "el aeropuerto", "casa"],
+                "answer": ["school", "the airport", "home"]
+            }
+        } 
+    },
+    {
+        "group_id": "PLACE",
+        "question": "Él está en ##PLACE##",
+        "answer": "He is in the ##PLACE##",
+        "randomize": {
+            "PLACE": {
+                "question": ["el museo", "el parque", "el coche", "la cocina"],
+                "answer": ["museum", "park", "car", "kitchen"]
+            }
+        } 
+    },
+    {
+        "group_id": "PLACE",
+        "question": "Puse el libro en ##PLACE##",
+        "answer": "I put the book on the ##PLACE##",
+        "randomize": {
+            "PLACE": {
+                "question": ["la mesa", "el sofá", "el césped", "el suelo"],
+                "answer": ["table", "coach", "grass", "floor"]
+            }
+        } 
+    },
+    {
+        "group_id": "PLACE",
+        "question": "##SUBJECT## ha llegado a ##PLACE##",
+        "answer": "##SUBJECT## has arrived in ##PLACE##",
+        "randomize": {
+            "PLACE": {
+                "question": ["Madrid", "España"],
+                "answer": ["Madrid", "Spain"]
+            },
+            "SUBJECT": {
+                "question": ["Él", "Ella"],
+                "answer": ["He", "She"]
+            }
+        } 
+    },
+    {
+        "group_id": "PLACE",
+        "question": "Tengo la foto en el teléfono",
+        "answer": "I have the picture on the phone" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "No esperes tener una lectura entretenida",
+        "answer": "Don't expect to have an amusing reading" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "Después de salir del trabajo, fuí a comer",
+        "answer": "After leaving work, I went to have lunch" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "Marta se despertó después que sonase el reloj",
+        "answer": "Marta woke up after the clock rang" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "Ella fue a un restaurante vegano a las 3",
+        "answer": "She went to a veggie restaurant at three o'clock" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "Él fué a dormir despues de tomase una taza de café",
+        "answer": "He went to sleep after drinking a cup of cofee" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "¿Cómo es ella? (Personalidad)",
+        "answer": "How is she like?" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "¿Cómo es ella? (Apariencia)",
+        "answer": "What does she look like?" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "En lo que se refiere a su personalidad, ella es muy amable",
+        "answer": "As regards to her personality, She is very kind" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "Tengo nariz grande",
+        "answer": "I have a big nose" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "Tengo ojos azules",
+        "answer": "I have blue eyes" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "Me encontré con él en el parque",
+        "answer": "I met him in the park" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "Hacía tanto frío que no podíamos ir al parque",
+        "answer": "It was so cold that we couldn't go to park" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "Nosotros estábamos paseando al perro",
+        "answer": "We were taking the dog for a walk" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "Fuí a dar un paseo",
+        "answer": "I went for a walk" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "Ellos no se llevan muy bien",
+        "answer": "They aren't getting on very well" 
+    },
+    {
+        "group_id": "OTHER",
+        "question": "Estaba escuchando música cuando alguien llamó a la puerta",
+        "answer": "I was listen to music when somebody knocked on the door" 
     }
 ]
